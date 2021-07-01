@@ -302,4 +302,13 @@ setInterval(timeGoes,1000);
  *   Here is a handy list: https://developer.mozilla.org/en-US/docs/Web/Events
  *   Click on each event listener to see an example of how it is used
  *
- */
+*/
+ let sumButton = document.getElementById("fname3");
+ sumButton.addEventListener("submit", function(event){
+   event.preventDefault();
+   var firstNumber = document.getElementById("fname1").value;
+   var secondNumber = document.getElementById("fname2").value;
+   var sumNumber = firstNumber+secondNumber;
+   let sumReslt = document.getElementById("sumResult");
+   sumReslt.innerText = sumNumber;
+ })
