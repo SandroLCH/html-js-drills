@@ -14,7 +14,7 @@
  *   (See below for drill-specific resources)
  */
 
-function addName() {
+ function addName() {
   console.log("addName() ran");
 
   // See:
@@ -29,33 +29,34 @@ function addFavoriteThings() {
   console.log("Called addFavoriteThings()");
   let favoriteThings = document.querySelector("#favthings");
   console.log(favoriteThings);
-  /*favoriteThings.innerHTML=`
-  <li>Coding</li>
-  <li>Sleeping</li>
-  <li>Watching Netflix</li>
-  <li>Video Games</li>
-  <li>Swimming</li>`;*/
-  let favThingsList = [
-    "Coding",
-    "Sleeping",
-    "Watching Netflix",
-    "Video Games",
-    "Swimming",
-  ];
+  favoriteThings.innerHTML = `
+    <li>Coding</li>
+    <li>Sleeping</li>
+    <li>Watching Netflix</li>
+    <li>Video Games</li>
+    <li>Swimming</li>`;
+
+  // let favThingsList = [
+  //   "Coding",
+  //   "Sleeping",
+  //   "Watching Netflix",
+  //   "Video Games",
+  //   "Swimming",
+  // ];
 
   /*for(let item of favThingsList){
-    console.log('Crossing off '+ item);
-    let li = document.createElement('li');
-    li.innerText = item;
-    favoriteThings.appendChild(li);
-  }*/
+      console.log('Crossing off '+ item);
+      let li = document.createElement('li');
+      li.innerText = item;
+      favoriteThings.appendChild(li);
+    }*/
 
-  let li1 = document.createElement("li");
+  let li1 = document.querySelector("li");
   li1.innerHTML = "<strong>Coding</strong>";
   favoriteThings.appendChild(li1);
 
   let li2 = document.createElement("li");
-  li2.textContent = "<strong>Sleeping</strong>";
+  li2.innerHTML = "<strong>Sleeping</strong>";
   favoriteThings.appendChild(li2);
   // 1. Get a reference to <ul id="favthings">
   // 2. Create a few list items representing your favorite things
@@ -71,7 +72,9 @@ function replaceImage() {
   console.log("Called replaceImage()");
   let image = document.querySelector("#picture");
   console.log(image);
-  image.setAttribute("src", "pic.jpg");
+  image.src = "puppy-development.jpg";
+  image.style = "width:400px;";
+
   // Change the puppy picture to a picture of your choosing
 
   // See:
@@ -86,6 +89,7 @@ function changeCodeStatus() {
   let newImg = document.createElement("img");
   newImg.setAttribute("src", "doge.gif");
   codeStatus.appendChild(newImg);
+  newImg.style = "width:200px";
   // codeStatus.innerHTML=`<img src="doge.gif" alt="My Doge">`;
   // 1. Get a reference to <div id="codestatus">
   // 2. Create image element containing a sweet ol' meme
@@ -139,19 +143,19 @@ informationForm.addEventListener("submit", function (event) {
   let humanCheck = document.querySelector("#humancheck").checked;
   let coderCheck = document.querySelector("#codercheck").checked;
   /*if(humanCheck){
-    let div = document.createElement('div');
-    div.innerText = "This person is a human";
-    document.querySelector("#checks").appendChild(div);
-  }
-  if(coderCheck){
-    let div = document.createElement('div');
-    div.innerText = "This person is a coder";
-    document.querySelector("#checks").appendChild(div);
-  }*/
+      let div = document.createElement('div');
+      div.innerText = "This person is a human";
+      document.querySelector("#checks").appendChild(div);
+    }
+    if(coderCheck){
+      let div = document.createElement('div');
+      div.innerText = "This person is a coder";
+      document.querySelector("#checks").appendChild(div);
+    }*/
 
   document.querySelector("#checks").innerHTML = `
-  <div>This person is a human: ${humanCheck}</div>
-  <div>This person is a coder: ${coderCheck}</div>`;
+    <div>This person is a human: ${humanCheck}</div>
+    <div>This person is a coder: ${coderCheck}</div>`;
   console.log(humanCheck, coderCheck);
   // Your job:
   //   1. Get information typed into the form
@@ -176,10 +180,9 @@ informationForm.addEventListener("submit", function (event) {
 // Fill in ________ to get a reference to the correct button on the page
 let consoleLogButton = document.querySelector("#console-log-button");
 
-
 // Log something when that button is clicked
 consoleLogButton.addEventListener("click", function () {
-  console.log("Change this text if you want!");
+  console.log("This task was easy!");
 });
 
 let makeBlueButton = document.querySelector("#make-blue-button");
@@ -196,8 +199,8 @@ makeBlueButton.addEventListener("click", function () {
 // can happen anywhere on the page and we'll respond.
 document.addEventListener("keydown", function (event) {
   console.log(event.code);
-  if(event.code=="KeyR"){
-    document.querySelector("#colorText").style.color ="red";
+  if (event.code == "KeyR") {
+    document.querySelector("#colorText").style.color = "red";
   }
   // This is called whenever a user pressed any key.
   // Your job:
@@ -223,19 +226,42 @@ document.addEventListener("keydown", function (event) {
  *   it is next to.
  */
 let toDoListForm = document.querySelector(".form");
-console.log('todolistform',toDoListForm);
+console.log("todolistform", toDoListForm);
+var countClicks = 1;
 // Do something when form is submitted
 toDoListForm.addEventListener("submit", function (event) {
   event.preventDefault();
   let toDoItem = document.querySelector("#todo").value;
   console.log(toDoItem);
-  let ul = document.querySelector('#todos');
-  let li = document.createElement('li');
-  li.innerText= toDoItem;
+  let ul = document.querySelector("#todos");
+  let li = document.createElement("li");
+  li.innerHTML = toDoItem;
+  li.setAttribute("id", "li"+countClicks);
   ul.appendChild(li);
+  toDoListForm.value = "";
+
+
+  let deleteButton = document.createElement("button");
+  deleteButton.innerText = "delete";
+  deleteButton.setAttribute("id",countClicks)
+  li.appendChild(deleteButton);
+
+
+
+  let submitButton = document.getElementsByClassName("btn-primary");
+  submitButton.onclick = countPlus();
+  function countPlus() {
+    countClicks++;
+  }
+  
+  document.addEventListener('click', function(event) {
+    let target = event.target ;
+    var currID = target.getAttribute("id");
+    document.getElementById("li"+currID).innerHTML = "";
+  })
+  
 });
 
-// Your code goes here
 
 /****************************************
  * Section 5 - setInterval + setTimeout *
@@ -254,7 +280,17 @@ toDoListForm.addEventListener("submit", function (event) {
  *
  */
 
-// Your code goes here
+let secondsDisplay = document.getElementById("seconds");
+var secondsPassed = 0;
+function timeGoes(){
+    secondsPassed++;
+    secondsDisplay.innerText = secondsPassed;
+    if(secondsPassed==5){
+        document.getElementById("delayedDisplay").innerText = "Hurray! 5 seconds are up!"
+    }
+}
+setInterval(timeGoes,1000);
+
 
 /****************************************
  * Section 6 - Your own section!        *
@@ -267,5 +303,3 @@ toDoListForm.addEventListener("submit", function (event) {
  *   Click on each event listener to see an example of how it is used
  *
  */
-
-// Your code goes here
